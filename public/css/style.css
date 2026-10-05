@@ -1,0 +1,15 @@
+/* SharePlate custom styles */
+.hero {
+  background: linear-gradient(135deg, #198754 0%, #0d5031 100%);
+}
+
+.sdg2 { background-color: #dda63a; }
+.sdg12 { background-color: #bf8b2e; }
+
+.status-Available { background-color: #0d6efd; }
+.status-Claimed   { background-color: #fd7e14; }
+.status-PickedUp  { background-color: #198754; }
+
+body {
+  background-color: #f8f9fa;
+}

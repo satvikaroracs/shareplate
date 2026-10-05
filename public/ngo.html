@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NGO Dashboard — SharePlate</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <nav class="navbar navbar-dark bg-success">
+    <div class="container">
+      <a class="navbar-brand fw-bold" href="index.html">🍽️ SharePlate</a>
+      <div class="d-flex align-items-center gap-3">
+        <span class="text-white small" id="userName"></span>
+        <button class="btn btn-outline-light btn-sm" onclick="logout()">Logout</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container py-4">
+    <h4 class="mb-4">Available Donations Near You 📍</h4>
+    <div class="row g-3" id="donationCards"></div>
+    <p id="emptyMsg" class="text-muted text-center d-none mt-4">
+      No donations available right now — check back soon! 🌱
+    </p>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script>
+    const user = requireRole('ngo');
+    document.getElementById('userName').textContent = '🤝 ' + user.name;
+
+    async function loadDonations() {
+      const list = await api('/donations');
+      document.getElementById('emptyMsg').classList.toggle('d-none', list.length > 0);
+      document.getElementById('donationCards').innerHTML = list.map(d => `
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm border-0">
+            <div class="card-body">
+              <h5>${d.foodItem}</h5>
+              <p class="mb-1">📦 <strong>${d.quantity}</strong></p>
+              <p class="mb-1">📍 ${d.location}</p>
+              <p class="mb-1">⏰ Best before: ${new Date(d.expiryTime).toLocaleString()}</p>
+              <p class="text-muted small mb-3">Donor: ${d.donor ? d.donor.name : '—'}</p>
+              <button class="btn btn-success w-100" onclick="claimDonation('${d._id}')">Claim Donation</button>
+            </div>
+          </div>
+        </div>`).join('');
+    }
+
+    async function claimDonation(id) {
+      await api('/donations/' + id + '/claim', { method: 'PUT', body: '{}' });
+      alert('Donation claimed! Contact the donor for pickup. 🎉');
+      loadDonations();
+    }
+
+    loadDonations();
+  </script>
+</body>
+</html>
