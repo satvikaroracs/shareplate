@@ -1211,3 +1211,218 @@ img {
     animation-duration: 0.01ms !important;
   }
 }
+
+/* =========================================
+   MEET OUR TEAM — TEAM SECTION
+   ========================================= */
+
+.team-section {
+  padding: 105px 0 95px;
+  background: var(--ivory);
+  overflow: hidden;
+}
+
+/* TEAM HEADING */
+
+.team-heading {
+  margin-bottom: 55px;
+}
+
+.team-heading-grid {
+  display: grid;
+  grid-template-columns: 1fr 0.65fr;
+  align-items: end;
+  gap: 65px;
+  margin-top: 25px;
+}
+
+.team-heading-grid .section-heading {
+  margin: 0;
+}
+
+.team-heading-grid > p {
+  max-width: 390px;
+  margin: 0 0 5px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+/* TEAM GRID */
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+  align-items: stretch;
+}
+
+/* TEAM CARD */
+
+.team-card {
+  min-width: 0;
+  padding: 35px 25px 30px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-card:hover {
+  transform: translateY(-7px);
+  box-shadow: 0 18px 35px rgba(36, 75, 53, 0.10);
+}
+
+/* CIRCULAR PROFILE PHOTOS */
+
+.team-photo {
+  width: 190px;
+  height: 190px;
+  margin: 0 auto 27px;
+  overflow: hidden;
+  border-radius: 50%;
+  border: 5px solid var(--sage-light);
+  background: var(--sage-light);
+}
+
+.team-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 50%;
+  transition: transform 0.4s ease;
+}
+
+.team-card:hover .team-photo img {
+  transform: scale(1.06);
+}
+
+/* TEAM MEMBER DETAILS */
+
+.team-card-info {
+  padding-top: 4px;
+}
+
+.team-role {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: var(--harvest);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+}
+
+.team-card-info h3 {
+  margin: 0 0 12px;
+  color: var(--forest);
+  font-family: var(--font-heading);
+  font-size: 27px;
+  font-weight: 500;
+}
+
+.team-card-info p {
+  max-width: 290px;
+  min-height: 48px;
+  margin: 0 auto;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.85;
+}
+
+/* TEAM FOOTER NOTE */
+
+.team-footer-note {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 45px;
+  padding-top: 25px;
+  border-top: 1px solid var(--line);
+}
+
+.team-note-symbol {
+  color: var(--harvest);
+  font-size: 22px;
+}
+
+.team-footer-note p {
+  margin: 0;
+  color: var(--forest);
+  font-family: var(--font-heading);
+  font-size: 17px;
+  font-style: italic;
+}
+
+/* TEAM RESPONSIVENESS */
+
+@media (max-width: 991px) {
+  .team-grid {
+    gap: 17px;
+  }
+
+  .team-card {
+    padding: 28px 16px;
+  }
+
+  .team-photo {
+    width: 155px;
+    height: 155px;
+  }
+
+  .team-card-info h3 {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 767px) {
+  .team-section {
+    padding: 75px 0 65px;
+  }
+
+  .team-heading {
+    margin-bottom: 35px;
+  }
+
+  .team-heading-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .team-heading-grid .section-heading {
+    font-size: clamp(38px, 9vw, 48px);
+  }
+
+  .team-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+
+  .team-card {
+    padding: 32px 22px;
+  }
+
+  .team-photo {
+    width: 180px;
+    height: 180px;
+    margin-bottom: 23px;
+  }
+
+  .team-card-info p {
+    min-height: 0;
+  }
+
+  .team-footer-note {
+    margin-top: 32px;
+    text-align: center;
+  }
+
+  .team-footer-note p {
+    font-size: 15px;
+  }
+}
+
