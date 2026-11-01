@@ -265,7 +265,7 @@
     .donation-table {
       width: 100%;
       border-collapse: collapse;
-      min-width: 590px;
+      min-width: 700px;
     }
 
     .donation-table th {
@@ -296,6 +296,18 @@
     .location-text {
       color: var(--muted, #777d73);
       max-width: 150px;
+    }
+
+    .ngo-name {
+      color: var(--forest, #244b35);
+      font-weight: 600;
+      min-width: 110px;
+    }
+
+    .ngo-pending {
+      color: var(--muted, #777d73);
+      font-size: 11px;
+      font-style: italic;
     }
 
     .status-badge {
@@ -588,7 +600,7 @@
         <div class="panel-header">
           <div>
             <h2>My donations</h2>
-            <p>Keep track of the food you've shared.</p>
+            <p>Keep track of the food you've shared and who claimed it.</p>
           </div>
           <span class="donation-count" id="donationCount">0 records</span>
         </div>
@@ -680,6 +692,7 @@
                 <th>Food</th>
                 <th>Quantity</th>
                 <th>Location</th>
+                <th>NGO / Receiver</th>
                 <th>Status</th>
                 <th>Actions</th>
               </tr>
@@ -690,11 +703,16 @@
                 const status = escapeHtml(d.status);
                 const badgeClass = statusClass[d.status] || '';
 
+                const ngoName = d.claimedBy && d.claimedBy.name
+                  ? escapeHtml(d.claimedBy.name)
+                  : '<span class="ngo-pending">Not claimed yet</span>';
+
                 return `
                   <tr>
                     <td><span class="food-name">${escapeHtml(d.foodItem)}</span></td>
                     <td>${escapeHtml(d.quantity)}</td>
                     <td><span class="location-text">${escapeHtml(d.location)}</span></td>
+                    <td><span class="ngo-name">${ngoName}</span></td>
                     <td>
                       <span class="status-badge ${badgeClass}">
                         ${status}
