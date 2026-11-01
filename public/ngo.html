@@ -1,61 +1,435 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>NGO Dashboard — SharePlate</title>
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    body {
+      background: #f6f9f6;
+    }
+
+    .dashboard-title {
+      font-weight: 700;
+      color: #174d32;
+    }
+
+    .stat-card {
+      border: 0;
+      border-radius: 14px;
+      box-shadow: 0 3px 14px rgba(0, 0, 0, 0.06);
+      height: 100%;
+    }
+
+    .stat-label {
+      color: #6c757d;
+      font-size: 0.9rem;
+    }
+
+    .stat-value {
+      color: #198754;
+      font-size: 1.7rem;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .section-card {
+      border: 0;
+      border-radius: 14px;
+      box-shadow: 0 3px 14px rgba(0, 0, 0, 0.05);
+    }
+
+    .donation-card {
+      border: 0;
+      border-radius: 14px;
+      box-shadow: 0 3px 14px rgba(0, 0, 0, 0.06);
+      transition: transform 0.2s ease;
+    }
+
+    .donation-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .history-item {
+      border: 1px solid #e8eee9;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 12px;
+      background: #fff;
+    }
+
+    .status-claimed {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .status-picked {
+      background: #d1e7dd;
+      color: #0f5132;
+    }
+
+    .quantity-summary {
+      font-size: 0.95rem;
+      color: #495057;
+      line-height: 1.7;
+    }
+  </style>
 </head>
+
 <body>
+
   <nav class="navbar navbar-dark bg-success">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="index.html">🍽️ SharePlate</a>
+      <a class="navbar-brand fw-bold" href="index.html">
+        🍽️ SharePlate
+      </a>
+
       <div class="d-flex align-items-center gap-3">
         <span class="text-white small" id="userName"></span>
-        <button class="btn btn-outline-light btn-sm" onclick="logout()">Logout</button>
+        <button class="btn btn-outline-light btn-sm" onclick="logout()">
+          Logout
+        </button>
       </div>
     </div>
   </nav>
 
-  <div class="container py-4">
-    <h4 class="mb-4">Available Donations Near You 📍</h4>
-    <div class="row g-3" id="donationCards"></div>
-    <p id="emptyMsg" class="text-muted text-center d-none mt-4">
-      No donations available right now — check back soon! 🌱
-    </p>
-  </div>
+  <main class="container py-4">
 
-  <script src="js/api.js"></script>
-  <script>
-    const user = requireRole('ngo');
-    document.getElementById('userName').textContent = '🤝 ' + user.name;
+    <div class="mb-4">
+      <h3 class="dashboard-title">NGO Dashboard 🤝</h3>
+      <p class="text-muted mb-0">
+        Discover available food donations and manage your claimed donations.
+      </p>
+    </div>
 
-    async function loadDonations() {
-      const list = await api('/donations');
-      document.getElementById('emptyMsg').classList.toggle('d-none', list.length > 0);
-      document.getElementById('donationCards').innerHTML = list.map(d => `
-        <div class="col-md-4">
-          <div class="card h-100 shadow-sm border-0">
-            <div class="card-body">
-              <h5>${d.foodItem}</h5>
-              <p class="mb-1">📦 <strong>${d.quantity}</strong></p>
-              <p class="mb-1">📍 ${d.location}</p>
-              <p class="mb-1">⏰ Best before: ${new Date(d.expiryTime).toLocaleString()}</p>
-              <p class="text-muted small mb-3">Donor: ${d.donor ? d.donor.name : '—'}</p>
-              <button class="btn btn-success w-100" onclick="claimDonation('${d._id}')">Claim Donation</button>
+    <!-- DASHBOARD STATISTICS -->
+    <div class="row g-3 mb-4">
+
+      <div class="col-md-6">
+        <div class="card stat-card">
+          <div class="card-body">
+            <p class="stat-label mb-2">Total Donations Claimed</p>
+            <div class="stat-value" id="totalClaimed">0</div>
+            <small class="text-muted">Including picked-up donations</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card stat-card">
+          <div class="card-body">
+            <p class="stat-label mb-2">Total Food Claimed</p>
+            <div class="stat-value" id="totalFood">0</div>
+            <div class="quantity-summary mt-2" id="quantityBreakdown">
+              No food claimed yet.
             </div>
           </div>
-        </div>`).join('');
+        </div>
+      </div>
+
+    </div>
+
+    <!-- AVAILABLE DONATIONS -->
+    <div class="card section-card mb-4">
+      <div class="card-body p-4">
+
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+          <div>
+            <h5 class="fw-bold mb-1">Available Donations 📍</h5>
+            <p class="text-muted small mb-0">
+              Food donations waiting to be claimed.
+            </p>
+          </div>
+
+          <button class="btn btn-outline-success btn-sm" onclick="loadDashboard()">
+            ↻ Refresh
+          </button>
+        </div>
+
+        <div class="row g-3" id="donationCards"></div>
+
+        <p id="emptyMsg" class="text-muted text-center d-none mt-4">
+          No donations available right now — check back soon! 🌱
+        </p>
+
+      </div>
+    </div>
+
+    <!-- CLAIMED DONATION HISTORY -->
+    <div class="card section-card">
+      <div class="card-body p-4">
+
+        <div class="mb-3">
+          <h5 class="fw-bold mb-1">My Claimed Donations 📦</h5>
+          <p class="text-muted small mb-0">
+            Keep track of donations you have claimed and picked up.
+          </p>
+        </div>
+
+        <div id="claimHistory"></div>
+
+        <p id="historyEmpty" class="text-muted text-center d-none mt-4">
+          You haven't claimed any donations yet.
+          Start by claiming an available donation above!
+        </p>
+
+      </div>
+    </div>
+
+  </main>
+
+  <script src="js/api.js"></script>
+
+  <script>
+    const user = requireRole('ngo');
+
+    if (user) {
+      document.getElementById('userName').textContent = '🤝 ' + user.name;
     }
 
-    async function claimDonation(id) {
-      await api('/donations/' + id + '/claim', { method: 'PUT', body: '{}' });
-      alert('Donation claimed! Contact the donor for pickup. 🎉');
-      loadDonations();
+    // Prevent user-provided content from being interpreted as HTML.
+    function escapeHtml(value) {
+      return String(value ?? '').replace(/[&<>"']/g, char => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+      })[char]);
     }
 
-    loadDonations();
+    function formatDate(value) {
+      const date = new Date(value);
+
+      if (Number.isNaN(date.getTime())) {
+        return 'Date unavailable';
+      }
+
+      return date.toLocaleString();
+    }
+
+    // Group quantities by their written units.
+    // For example: 10 kg + 5 kg = 15 kg.
+    // But 10 kg and 5 meal boxes are never added together.
+    function calculateQuantitySummary(donations) {
+      const groups = new Map();
+      const unparsed = [];
+
+      donations.forEach(donation => {
+        const quantity = String(donation.quantity || '').trim();
+
+        const match = quantity.match(/^(\d+(?:\.\d+)?)\s*(.*)$/);
+
+        if (!match) {
+          if (quantity) {
+            unparsed.push(quantity);
+          }
+          return;
+        }
+
+        const amount = Number(match[1]);
+        const unit = match[2].trim();
+        const key = unit.toLowerCase();
+
+        if (!groups.has(key)) {
+          groups.set(key, {
+            amount: 0,
+            unit: unit
+          });
+        }
+
+        groups.get(key).amount += amount;
+      });
+
+      const summaries = [];
+
+      groups.forEach(group => {
+        const amount = Number(group.amount.toFixed(2));
+        summaries.push(
+          amount + (group.unit ? ' ' + group.unit : ' (unit not specified)')
+        );
+      });
+
+      return {
+        display: summaries.concat(unparsed),
+        total: summaries.length + unparsed.length
+      };
+    }
+
+    // Display the available donations.
+    function renderAvailableDonations(list) {
+      const cards = document.getElementById('donationCards');
+      const empty = document.getElementById('emptyMsg');
+
+      empty.classList.toggle('d-none', list.length > 0);
+
+      if (list.length === 0) {
+        cards.innerHTML = '';
+        return;
+      }
+
+      cards.innerHTML = list.map(d => `
+        <div class="col-md-6 col-lg-4">
+          <div class="card donation-card h-100">
+            <div class="card-body d-flex flex-column">
+
+              <h5 class="fw-bold">
+                ${escapeHtml(d.foodItem)}
+              </h5>
+
+              <p class="mb-2">
+                📦 <strong>${escapeHtml(d.quantity)}</strong>
+              </p>
+
+              <p class="mb-2">
+                📍 ${escapeHtml(d.location)}
+              </p>
+
+              <p class="mb-2">
+                ⏰ Best before: ${escapeHtml(formatDate(d.expiryTime))}
+              </p>
+
+              <p class="text-muted small mb-3">
+                Donor: ${escapeHtml(d.donor ? d.donor.name : '—')}
+              </p>
+
+              <button
+                class="btn btn-success w-100 mt-auto"
+                onclick="claimDonation('${escapeHtml(d._id)}', this)">
+                Claim Donation
+              </button>
+
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Display claimed and picked-up donation history.
+    function renderClaimHistory(list) {
+      const history = document.getElementById('claimHistory');
+      const empty = document.getElementById('historyEmpty');
+
+      empty.classList.toggle('d-none', list.length > 0);
+
+      if (list.length === 0) {
+        history.innerHTML = '';
+        return;
+      }
+
+      history.innerHTML = list.map(d => {
+        const pickedUp = d.status === 'Picked Up';
+
+        const statusClass = pickedUp
+          ? 'status-picked'
+          : 'status-claimed';
+
+        const statusText = pickedUp
+          ? 'Picked Up'
+          : 'Claimed';
+
+        return `
+          <div class="history-item">
+            <div class="d-flex justify-content-between align-items-start flex-wrap gap-2">
+
+              <div>
+                <h6 class="fw-bold mb-2">
+                  ${escapeHtml(d.foodItem)}
+                </h6>
+
+                <p class="mb-1">
+                  📦 ${escapeHtml(d.quantity)}
+                </p>
+
+                <p class="mb-1">
+                  📍 ${escapeHtml(d.location)}
+                </p>
+
+                <p class="mb-1 text-muted small">
+                  Donor: ${escapeHtml(d.donor ? d.donor.name : '—')}
+                </p>
+
+                <p class="mb-0 text-muted small">
+                  Best before: ${escapeHtml(formatDate(d.expiryTime))}
+                </p>
+              </div>
+
+              <span class="badge rounded-pill ${statusClass} px-3 py-2">
+                ${statusText}
+              </span>
+
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Update dashboard statistics.
+    function renderStatistics(claims) {
+      document.getElementById('totalClaimed').textContent = claims.length;
+
+      const summary = calculateQuantitySummary(claims);
+
+      document.getElementById('totalFood').textContent =
+        summary.total === 0 ? '0' : summary.total + ' unit group(s)';
+
+      document.getElementById('quantityBreakdown').textContent =
+        summary.display.length > 0
+          ? summary.display.join(' · ')
+          : 'No food claimed yet.';
+    }
+
+    // Load both available donations and the NGO's claim history.
+    async function loadDashboard() {
+      try {
+        const [available, claims] = await Promise.all([
+          api('/donations'),
+          api('/donations/my-claims')
+        ]);
+
+        if (!Array.isArray(available) || !Array.isArray(claims)) {
+          throw new Error('Unexpected response from the server.');
+        }
+
+        renderAvailableDonations(available);
+        renderClaimHistory(claims);
+        renderStatistics(claims);
+
+      } catch (error) {
+        console.error('Dashboard loading error:', error);
+      }
+    }
+
+    // Claim a donation and refresh all dashboard sections.
+    async function claimDonation(id, button) {
+      try {
+        button.disabled = true;
+        button.textContent = 'Claiming...';
+
+        await api('/donations/' + encodeURIComponent(id) + '/claim', {
+          method: 'PUT',
+          body: '{}'
+        });
+
+        alert('Donation claimed successfully! Contact the donor for pickup. 🎉');
+
+        await loadDashboard();
+
+      } catch (error) {
+        console.error('Claim error:', error);
+        button.disabled = false;
+        button.textContent = 'Claim Donation';
+      }
+    }
+
+    // Initial dashboard load.
+    loadDashboard();
   </script>
+
 </body>
 </html>
