@@ -1,71 +1,304 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SharePlate — Food Donation & Waste Reduction</title>
+
+  <title>SharePlate — Good Food Deserves a Second Home</title>
+  <meta name="description" content="SharePlate connects food donors with NGOs to rescue surplus food, reduce waste and support communities.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
-  <nav class="navbar navbar-dark bg-success">
-    <div class="container">
-      <a class="navbar-brand fw-bold" href="index.html">🍽️ SharePlate</a>
-      <div class="d-flex gap-2">
-        <a href="login.html" class="btn btn-outline-light btn-sm">Login</a>
-        <a href="register.html" class="btn btn-light btn-sm">Register</a>
+
+  <!-- NAVIGATION -->
+  <nav class="site-nav">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">S.</span>
+        <span>shareplate<span class="brand-period">.</span></span>
+      </a>
+
+      <div class="nav-links">
+        <a href="#mission">Our mission</a>
+        <a href="#how-it-works">How it works</a>
+      </div>
+
+      <div class="nav-actions">
+        <a href="login.html" class="nav-login">Log in</a>
+        <a href="register.html" class="button button-dark button-small">Join SharePlate <span>↗</span></a>
       </div>
     </div>
   </nav>
 
-  <header class="hero text-center text-white">
-    <div class="container py-5">
-      <span class="badge sdg2 mb-3">SDG 2 · Zero Hunger</span>
-      <span class="badge sdg12 mb-3">SDG 12 · Responsible Consumption</span>
-      <h1 class="display-4 fw-bold mt-3">Share Food, Not Waste</h1>
-      <p class="lead col-lg-8 mx-auto">
-        Connect campus donors with NGOs and people in need. Reduce food waste,
-        fight hunger — one plate at a time.
-      </p>
-      <a href="register.html" class="btn btn-light btn-lg mt-3">Get Started</a>
-    </div>
-  </header>
+  <main>
 
-  <section class="container py-5">
-    <div class="row g-4 text-center">
-      <div class="col-md-4">
-        <div class="card h-100 shadow-sm border-0">
-          <div class="card-body p-4">
-            <h1>🍱</h1>
-            <h4>1. Donate</h4>
-            <p class="text-muted">Post surplus food from hostels, canteens or events with quantity, expiry and pickup location.</p>
+    <!-- HERO -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="hero-grid">
+
+          <div class="hero-copy">
+            <div class="eyebrow">
+              <span class="eyebrow-line"></span>
+              FOOD RESCUE. COMMUNITY IMPACT.
+            </div>
+
+            <h1>
+              Good food deserves
+              <span>a second <em>home.</em></span>
+            </h1>
+
+            <p class="hero-description">
+              Every day, good food goes uneaten while people go without.
+              SharePlate brings donors and NGOs together to change that,
+              one meal at a time.
+            </p>
+
+            <div class="hero-actions">
+              <a href="register.html" class="button button-dark">
+                Be part of the change <span>↗</span>
+              </a>
+              <a href="#how-it-works" class="text-link">
+                Discover how it works <span>↓</span>
+              </a>
+            </div>
+
+            <div class="hero-note">
+              <span class="note-dot"></span>
+              Built around SDG 2 and SDG 12
+            </div>
+          </div>
+
+          <div class="hero-visual">
+            <div class="hero-image">
+              <img
+                src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1200&q=85"
+                alt="Fresh, colourful prepared food ready to be shared"
+              >
+            </div>
+
+            <div class="image-caption">
+              <span class="caption-number">01 / 03</span>
+              <span>From surplus to something meaningful.</span>
+            </div>
+
+            <div class="hero-stamp">
+              <span>LESS WASTE</span>
+              <span class="stamp-symbol">✳</span>
+              <span>MORE CARE</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="hero-bottom-line"></div>
+    </section>
+
+    <!-- MISSION -->
+    <section class="mission-section" id="mission">
+      <div class="container">
+        <div class="mission-grid">
+
+          <div>
+            <div class="eyebrow">
+              <span class="eyebrow-line"></span>
+              WHY SHAREPLATE EXISTS
+            </div>
+            <h2 class="section-heading">
+              A little less waste.
+              <span>A lot more <em>good.</em></span>
+            </h2>
+          </div>
+
+          <div class="mission-copy">
+            <p>
+              Surplus food doesn't have to become wasted food.
+              A hostel kitchen, a campus canteen or a community event
+              can become the starting point of something much better.
+            </p>
+            <p>
+              SharePlate makes it easier for donors to offer available
+              food and for NGOs to discover, claim and collect it.
+            </p>
+            <a href="register.html" class="underlined-link">
+              Join the movement <span>↗</span>
+            </a>
+          </div>
+
+        </div>
+
+        <div class="mission-values">
+          <div class="value-item">
+            <span class="value-index">01</span>
+            <h4>Reduce waste</h4>
+            <p>Give surplus food a useful purpose instead of letting it go to waste.</p>
+          </div>
+
+          <div class="value-item">
+            <span class="value-index">02</span>
+            <h4>Build connections</h4>
+            <p>Bring food donors and organisations together through one platform.</p>
+          </div>
+
+          <div class="value-item">
+            <span class="value-index">03</span>
+            <h4>Make an impact</h4>
+            <p>Make food recovery more accessible, organised and accountable.</p>
           </div>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="card h-100 shadow-sm border-0">
-          <div class="card-body p-4">
-            <h1>🤝</h1>
-            <h4>2. Claim</h4>
-            <p class="text-muted">Verified NGOs browse nearby available donations and claim them in one click.</p>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="process-section" id="how-it-works">
+      <div class="container">
+
+        <div class="process-heading">
+          <div>
+            <div class="eyebrow">
+              <span class="eyebrow-line"></span>
+              SIMPLE BY DESIGN
+            </div>
+            <h2 class="section-heading">
+              Three steps.
+              <span>One shared <em>purpose.</em></span>
+            </h2>
+          </div>
+
+          <p class="process-intro">
+            Turning surplus into support shouldn't be complicated.
+            Here's how SharePlate makes it happen.
+          </p>
+        </div>
+
+        <div class="process-grid">
+
+          <article class="process-card">
+            <div class="process-top">
+              <span class="process-number">01</span>
+              <span class="process-icon">↗</span>
+            </div>
+            <div class="process-image process-image-one"></div>
+            <h3>Donate</h3>
+            <p>
+              Donors list surplus food with its quantity, expiry time
+              and pickup location.
+            </p>
+            <span class="process-label">FOR FOOD DONORS</span>
+          </article>
+
+          <article class="process-card">
+            <div class="process-top">
+              <span class="process-number">02</span>
+              <span class="process-icon">↗</span>
+            </div>
+            <div class="process-image process-image-two"></div>
+            <h3>Claim</h3>
+            <p>
+              NGOs browse available donations and claim food
+              that they can collect.
+            </p>
+            <span class="process-label">FOR NGOS</span>
+          </article>
+
+          <article class="process-card">
+            <div class="process-top">
+              <span class="process-number">03</span>
+              <span class="process-icon">↗</span>
+            </div>
+            <div class="process-image process-image-three"></div>
+            <h3>Collect</h3>
+            <p>
+              The donor updates the donation status so everyone
+              can follow its journey.
+            </p>
+            <span class="process-label">FROM DONATION TO PICKUP</span>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SDG SECTION -->
+    <section class="sdg-section">
+      <div class="container">
+        <div class="sdg-content">
+          <div class="eyebrow eyebrow-light">
+            <span class="eyebrow-line"></span>
+            A PURPOSE BEYOND THE PLATE
+          </div>
+
+          <h2>
+            Small actions can
+            <em>feed bigger change.</em>
+          </h2>
+
+          <p>
+            SharePlate supports the global goals of ending hunger
+            and encouraging responsible consumption and production.
+          </p>
+
+          <div class="sdg-tags">
+            <span>SDG 02 · ZERO HUNGER</span>
+            <span>SDG 12 · RESPONSIBLE CONSUMPTION</span>
           </div>
         </div>
       </div>
-      <div class="col-md-4">
-        <div class="card h-100 shadow-sm border-0">
-          <div class="card-body p-4">
-            <h1>✅</h1>
-            <h4>3. Pick Up</h4>
-            <p class="text-muted">Donors track status — Available → Claimed → Picked Up — until food reaches someone in need.</p>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="closing-section">
+      <div class="container">
+        <div class="closing-inner">
+          <div class="eyebrow">
+            <span class="eyebrow-line"></span>
+            YOUR NEXT STEP STARTS HERE
           </div>
+
+          <h2>
+            Let's make sure
+            <span>good food finds <em>good people.</em></span>
+          </h2>
+
+          <a href="register.html" class="button button-dark">
+            Get started with SharePlate <span>↗</span>
+          </a>
         </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <a class="brand footer-brand" href="index.html">
+          <span class="brand-mark">S.</span>
+          <span>shareplate<span class="brand-period">.</span></span>
+        </a>
+
+        <p>Good food deserves a second home.</p>
+
+        <a href="register.html" class="footer-join">Join the community ↗</a>
+      </div>
+
+      <div class="footer-bottom">
+        <span>Built for SDG 2 &amp; SDG 12</span>
+        <span>B.Tech CSE · Web Technologies Project</span>
+        <span>© 2026 SharePlate</span>
       </div>
     </div>
-  </section>
-
-  <footer class="text-center text-muted pb-4">
-    <hr class="w-50 mx-auto">
-    Built for <strong>SDG 2</strong> &amp; <strong>SDG 12</strong> · BTech CSE Web Technologies Project
   </footer>
+
 </body>
 </html>
