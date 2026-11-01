@@ -1562,14 +1562,17 @@ img {
     flex-basis: 42px;
   }
 }
-/* HERO IMAGE CAPTION — IMPROVED READABILITY */
+/* HERO IMAGE TAGLINE */
 
 .image-caption {
-    font-size: 13px;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    line-height: 1.5;
 }
 
 @media (max-width: 767px) {
     .image-caption {
-        font-size: 12px;
+        font-size: 16px;
     }
 }
