@@ -4,7 +4,8 @@ const Donation = require('../models/Donation');
 const auth = require('../middleware/auth');
 const router = express.Router();
 
-// GET /api/donations/my-claims -> NGO sees their claimed donation history
+// GET /api/donations/my-claims
+// NGO sees its claimed donation history
 router.get('/my-claims', auth, async (req, res) => {
   try {
     if (req.user.role !== 'ngo') {
@@ -26,7 +27,8 @@ router.get('/my-claims', auth, async (req, res) => {
   }
 });
 
-// POST /api/donations -> donor posts a new donation
+// POST /api/donations
+// Donor posts a new donation
 router.post('/', auth, async (req, res) => {
   try {
     if (req.user.role !== 'donor') {
@@ -57,13 +59,17 @@ router.post('/', auth, async (req, res) => {
   }
 });
 
-// GET /api/donations -> donor sees own list, NGO sees all Available ones
+// GET /api/donations
+// Donor sees their own donations, including the NGO name
+// NGO sees all available donations
 router.get('/', auth, async (req, res) => {
   try {
     if (req.user.role === 'donor') {
       const mine = await Donation.find({
         donor: req.user.id
-      }).sort('-createdAt');
+      })
+        .populate('claimedBy', 'name')
+        .sort('-createdAt');
 
       return res.json(mine);
     }
@@ -80,7 +86,8 @@ router.get('/', auth, async (req, res) => {
   }
 });
 
-// PUT /api/donations/:id/claim -> NGO claims an available donation
+// PUT /api/donations/:id/claim
+// NGO claims an available donation
 router.put('/:id/claim', auth, async (req, res) => {
   try {
     if (req.user.role !== 'ngo') {
@@ -113,7 +120,8 @@ router.put('/:id/claim', auth, async (req, res) => {
   }
 });
 
-// PUT /api/donations/:id/status -> donor marks donation as Picked Up
+// PUT /api/donations/:id/status
+// Donor marks donation as Picked Up
 router.put('/:id/status', auth, async (req, res) => {
   try {
     const donation = await Donation.findOne({
@@ -136,7 +144,8 @@ router.put('/:id/status', auth, async (req, res) => {
   }
 });
 
-// DELETE /api/donations/:id -> donor deletes their own donation
+// DELETE /api/donations/:id
+// Donor deletes their own donation
 router.delete('/:id', auth, async (req, res) => {
   try {
     const donation = await Donation.findOneAndDelete({
@@ -157,4 +166,3 @@ router.delete('/:id', auth, async (req, res) => {
 });
 
 module.exports = router;
-
