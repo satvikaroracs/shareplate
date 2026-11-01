@@ -1428,122 +1428,90 @@ img {
    MOBILE HAMBURGER NAVIGATION
    ========================================= */
 
-/* Desktop: hide hamburger */
+/* Desktop: show normal navigation, hide hamburger */
 .nav-toggle {
   display: none;
 }
 
-/* Mobile navigation */
 @media (max-width: 767px) {
 
-  .nav-inner {
+  .site-nav {
     position: relative;
-    display: grid;
-    grid-template-columns: 1fr auto;
+    z-index: 100;
+  }
+
+  .nav-inner {
+    min-height: 82px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     align-items: center;
+    justify-content: space-between;
     gap: 12px;
-    padding-top: 13px;
-    padding-bottom: 13px;
+    padding-top: 12px;
+    padding-bottom: 12px;
   }
 
   .brand {
-    grid-column: 1;
-    grid-row: 1;
+    flex: 0 1 auto;
+    margin-right: auto;
+    white-space: nowrap;
   }
 
-  /* Hamburger button */
+  /* Hamburger stays at the far right */
   .nav-toggle {
-    grid-column: 2;
-    grid-row: 1;
     display: flex;
-    width: 42px;
-    height: 42px;
-    padding: 11px 9px;
-    flex-direction: column;
-    justify-content: center;
+    flex: 0 0 48px;
+    width: 48px;
+    height: 48px;
     align-items: center;
-    gap: 5px;
+    justify-content: center;
+    margin-left: auto;
+    padding: 0;
     border: 1px solid var(--line);
-    border-radius: 3px;
-    background: var(--paper);
+    border-radius: 4px;
+    background: transparent;
+    color: var(--forest);
     cursor: pointer;
-    z-index: 12;
   }
 
-  .nav-toggle span {
-    display: block;
-    width: 21px;
-    height: 2px;
-    background: var(--forest);
-    border-radius: 2px;
-    transition: transform 0.25s ease, opacity 0.25s ease;
+  .nav-toggle:hover {
+    background: var(--sage-light);
   }
 
-  /* Animate hamburger into an X */
-  .nav-toggle.active span:nth-child(1) {
-    transform: translateY(7px) rotate(45deg);
+  .nav-toggle:focus-visible {
+    outline: 2px solid var(--harvest);
+    outline-offset: 3px;
   }
 
-  .nav-toggle.active span:nth-child(2) {
-    opacity: 0;
-  }
-
-  .nav-toggle.active span:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
-  }
-
-  /* Login and join buttons */
-  .nav-actions {
-    grid-column: 1 / -1;
-    grid-row: 2;
-    justify-content: flex-end;
-    gap: 16px;
-    padding-top: 5px;
-  }
-
-  /* Collapsible navigation panel */
+  /* Hide desktop navigation until hamburger is opened */
   .nav-links {
+    display: none;
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
-    z-index: 11;
-
-    display: flex;
     flex-direction: column;
+    align-items: stretch;
     gap: 0;
-
-    padding: 8px 20px;
+    padding: 10px 22px;
     background: var(--paper);
-    border: 1px solid var(--line);
-    border-top: none;
-    box-shadow: 0 12px 22px rgba(25, 58, 41, 0.09);
-
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transform: translateY(-8px);
-
-    transition:
-      opacity 0.2s ease,
-      visibility 0.2s ease,
-      transform 0.2s ease;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.06);
   }
 
-  .nav-links.is-open {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transform: translateY(0);
+  .nav-links.is-open,
+  .nav-links.active {
+    display: flex;
   }
 
   .nav-links a {
     display: block;
-    padding: 15px 3px;
-    color: var(--forest);
-    font-size: 13px;
-    font-weight: 600;
+    padding: 15px 0;
     border-bottom: 1px solid var(--line);
+    color: var(--forest);
+    font-size: 14px;
   }
 
   .nav-links a:last-child {
@@ -1553,28 +1521,30 @@ img {
   .nav-links a:hover {
     color: var(--harvest);
   }
-}
 
-/* Very small screens */
-@media (max-width: 400px) {
+  /* Keep login and join actions out of the awkward second row */
   .nav-actions {
-    gap: 12px;
-  }
-
-  .nav-login {
-    font-size: 12px;
-  }
-
-  .button-small {
-    padding: 0 11px;
-    font-size: 11px;
+    display: none;
   }
 }
 
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .nav-toggle span,
-  .nav-links {
-    transition: none;
+@media (max-width: 400px) {
+  .nav-inner {
+    min-height: 76px;
+  }
+
+  .brand {
+    font-size: 20px;
+  }
+
+  .brand-mark {
+    width: 34px;
+    height: 34px;
+  }
+
+  .nav-toggle {
+    width: 44px;
+    height: 44px;
+    flex-basis: 44px;
   }
 }
