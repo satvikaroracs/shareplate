@@ -1424,12 +1424,13 @@ img {
     font-size: 15px;
   }
 }
+
 /* =========================================
-   MOBILE HAMBURGER NAVIGATION
+   MOBILE HAMBURGER NAVIGATION — FIXED
    ========================================= */
 
-/* Desktop: show normal navigation, hide hamburger */
-.nav-toggle {
+/* Desktop: hide hamburger */
+.mobile-menu-toggle {
   display: none;
 }
 
@@ -1441,15 +1442,15 @@ img {
   }
 
   .nav-inner {
-    min-height: 82px;
+    min-height: 76px;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    padding-top: 12px;
-    padding-bottom: 12px;
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
 
   .brand {
@@ -1458,33 +1459,45 @@ img {
     white-space: nowrap;
   }
 
-  /* Hamburger stays at the far right */
-  .nav-toggle {
+  /* Hamburger button */
+  .mobile-menu-toggle {
     display: flex;
-    flex: 0 0 48px;
-    width: 48px;
-    height: 48px;
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 5px;
     margin-left: auto;
     padding: 0;
     border: 1px solid var(--line);
     border-radius: 4px;
     background: transparent;
-    color: var(--forest);
     cursor: pointer;
+    position: relative;
+    z-index: 102;
   }
 
-  .nav-toggle:hover {
+  /* The three hamburger lines */
+  .mobile-menu-toggle span {
+    display: block;
+    width: 19px;
+    height: 2px;
+    background: var(--forest);
+    border-radius: 2px;
+  }
+
+  .mobile-menu-toggle:hover {
     background: var(--sage-light);
   }
 
-  .nav-toggle:focus-visible {
+  .mobile-menu-toggle:focus-visible {
     outline: 2px solid var(--harvest);
     outline-offset: 3px;
   }
 
-  /* Hide desktop navigation until hamburger is opened */
+  /* Mobile navigation dropdown */
   .nav-links {
     display: none;
     position: absolute;
@@ -1499,10 +1512,11 @@ img {
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
     box-shadow: 0 12px 20px rgba(0, 0, 0, 0.06);
+    z-index: 101;
   }
 
-  .nav-links.is-open,
-  .nav-links.active {
+  /* IMPORTANT: matches the JavaScript class */
+  .nav-links.mobile-nav-open {
     display: flex;
   }
 
@@ -1522,7 +1536,7 @@ img {
     color: var(--harvest);
   }
 
-  /* Keep login and join actions out of the awkward second row */
+  /* Hide desktop login/join links on mobile */
   .nav-actions {
     display: none;
   }
@@ -1530,7 +1544,7 @@ img {
 
 @media (max-width: 400px) {
   .nav-inner {
-    min-height: 76px;
+    min-height: 72px;
   }
 
   .brand {
@@ -1542,9 +1556,10 @@ img {
     height: 34px;
   }
 
-  .nav-toggle {
-    width: 44px;
-    height: 44px;
-    flex-basis: 44px;
+  .mobile-menu-toggle {
+    width: 42px;
+    height: 42px;
+    flex-basis: 42px;
   }
 }
+
